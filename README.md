@@ -1,1 +1,1 @@
-# EasyBuy
+# LuXa
