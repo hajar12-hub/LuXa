@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+
+    <!-- 
+      Une "Unité de Persistance". Vous pouvez en avoir plusieurs pour différentes bases de données.
+      Le nom "ecommerce-pu" est un identifiant que vous utiliserez dans votre code Java pour 
+      créer un EntityManagerFactory.
+      transaction-type="RESOURCE_LOCAL" est utilisé pour les applications Java SE ou les 
+      applications web simples où vous gérez les transactions manuellement.
+    -->
+    <persistence-unit name="ecommerce-pu" transaction-type="RESOURCE_LOCAL">
+        
+        <!-- Spécifie que l'implémentation de JPA que nous utilisons est Hibernate. -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        
+        <!-- 
+          Liste explicite de toutes les classes qui sont des entités.
+          Hibernate doit savoir quelles classes il doit gérer.
+        -->
+        <class>com.luxa.ecommerce.model.User</class>
+        <class>com.luxa.ecommerce.model.Category</class>
+        <class>com.luxa.ecommerce.model.Product</class>
+        <class>com.luxa.ecommerce.model.ProductVariant</class>
+        <class>com.luxa.ecommerce.model.ProductImage</class>
+        <class>com.luxa.ecommerce.model.Promo</class>
+        <class>com.luxa.ecommerce.model.Order</class>
+        <class>com.luxa.ecommerce.model.OrderItem</class>
+        <class>com.luxa.ecommerce.model.Cart</class>
+        <class>com.luxa.ecommerce.model.CartItem</class>
+        <class>com.luxa.ecommerce.model.Payment</class>
+        <class>com.luxa.ecommerce.model.ContactMessage</class>
+        
+        <properties>
+            <!-- ============================================= -->
+            <!-- Propriétés de connexion JDBC (standard JPA)   -->
+            <!-- ============================================= -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce_accessoires?serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="votre_mot_de_passe_secret" />
+
+            <!-- ============================================= -->
+            <!-- Propriétés spécifiques à Hibernate            -->
+            <!-- ============================================= -->
+            
+            <!-- Le dialecte SQL pour que Hibernate génère des requêtes optimisées pour MySQL 8. -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            
+            <!-- Affiche les requêtes SQL dans la console. Indispensable pour le développement. -->
+            <property name="hibernate.show_sql" value="true" />
+            
+            <!-- Formate le SQL affiché pour qu'il soit plus lisible. -->
+            <property name="hibernate.format_sql" value="true" />
+            
+            <!-- 
+              Stratégie de gestion du schéma de la base de données au démarrage.
+              - "validate": Vérifie que les tables de la BDD correspondent aux entités. Ne modifie rien. (Recommandé si vous utilisez un script SQL)
+              - "update": Tente de mettre à jour la BDD pour qu'elle corresponde aux entités. (Pratique en développement)
+              - "create": Supprime les anciennes tables et en crée de nouvelles à chaque démarrage. (Utile pour les tests)
+              - "create-drop": Comme "create", mais supprime tout à l'arrêt de l'application. (Idéal pour les tests unitaires)
+              - "none": Ne fait rien. (Recommandé pour la production)
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+        </properties>
+        
+    </persistence-unit>
+</persistence>
