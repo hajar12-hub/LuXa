@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+
+    <persistence-unit name="backend3-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>com.luxa.backend3.model.User</class>
+        <class>com.luxa.backend3.model.Category</class>
+        <class>com.luxa.backend3.model.Product</class>
+        <class>com.luxa.backend3.model.ProductVariant</class>
+        <class>com.luxa.backend3.model.ProductImage</class>
+        <class>com.luxa.backend3.model.Promo</class>
+        <class>com.luxa.backend3.model.Order</class>
+        <class>com.luxa.backend3.model.OrderItem</class>
+        <class>com.luxa.backend3.model.Cart</class>
+        <class>com.luxa.backend3.model.CartItem</class>
+        <class>com.luxa.backend3.model.Payment</class>
+        <class>com.luxa.backend3.model.ContactMessage</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/backend3_accessoires?serverTimezone=UTC" />
+            <property name="jakarta.persistence.jdbc.user" value="root" />
+            <property name="jakarta.persistence.jdbc.password" value="" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+            <property name="hibernate.htm2ddl.auto" value="update" />
+        </properties>
+    </persistence-unit>
+</persistence>
