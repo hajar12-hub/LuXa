@@ -1,0 +1,15 @@
+<dependencies>
+    <!-- Implémentation de JPA par Hibernate -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>5.6.15.Final</version> <!-- Utilisez une version récente -->
+    </dependency>
+
+    <!-- Le driver pour se connecter à MySQL -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.33</version> <!-- Utilisez une version récente -->
+    </dependency>
+</dependencies>
