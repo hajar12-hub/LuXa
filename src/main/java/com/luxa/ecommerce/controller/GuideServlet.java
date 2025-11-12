@@ -1,6 +1,5 @@
-package com.luxa.ecommerce.controller.cart;
+package com.luxa.ecommerce.controller;
 
-import com.luxa.ecommerce.util.CartUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,13 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="CartViewServlet", urlPatterns={"/cart"})
-public class CartViewServlet extends HttpServlet {
+@WebServlet(name="GuideServlet", urlPatterns={"/guide"})
+public class GuideServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Cart cart = CartUtils.getOrCreateCart(req.getSession());
-        req.setAttribute("cart", cart);
-        req.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/guide.jsp").forward(req, resp);
     }
 }
+

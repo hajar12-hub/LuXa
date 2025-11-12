@@ -27,7 +27,7 @@
         <nav class="luxa-nav">
             <a href="<%= ctx %>/home" class="nav-link">Accueil</a>
             <a href="<%= ctx %>/products" class="nav-link">Produits</a>
-            <a href="<%= ctx %>/guides" class="nav-link">Guide</a>
+            <a href="<%= ctx %>/guide" class="nav-link">Guide</a>
             <a href="${pageContext.request.contextPath}/contact" class="nav-link">Contact</a>
 
         </nav>

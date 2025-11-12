@@ -1,6 +1,6 @@
-/*package com.luxa.ecommerce.controller.cart;
+package com.luxa.ecommerce.controller.cart;
 
-import com.luxa.ecommerce.cart.CartUtils;
+import com.luxa.ecommerce.util.CartUtils;
 import com.luxa.ecommerce.service.CartService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,9 +18,10 @@ public class CartRemoveServlet extends HttpServlet {
             throws ServletException, IOException {
         int productId = Integer.parseInt(req.getParameter("productId"));
 
-        var cart = CartUtils.getOrCreate(req.getSession());
+        var cart = CartUtils.getOrCreateCart(req.getSession());
+
         cartService.remove(cart, productId);
 
         resp.sendRedirect(req.getContextPath() + "/cart");
     }
-}*/
+}

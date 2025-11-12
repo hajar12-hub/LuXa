@@ -1,6 +1,6 @@
-/*package com.luxa.ecommerce.controller.cart;
+package com.luxa.ecommerce.controller.cart;
 
-import com.luxa.ecommerce.cart.CartUtils;
+import com.luxa.ecommerce.util.CartUtils;
 import com.luxa.ecommerce.service.CartService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,9 +21,10 @@ public class CartAddServlet extends HttpServlet {
         int productId = Integer.parseInt(req.getParameter("productId"));
         int qty = Integer.parseInt(req.getParameter("qty"));
 
-        var cart = CartUtils.getOrCreate(req.getSession());
+        var cart = CartUtils.getOrCreateCart(req.getSession());
+
         cartService.add(cart, productId, qty);
 
         resp.sendRedirect(req.getContextPath() + "/cart");
     }
-}*/
+}

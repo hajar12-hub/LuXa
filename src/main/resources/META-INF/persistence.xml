@@ -8,6 +8,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.luxa.ecommerce.model.User</class>
         <class>com.luxa.ecommerce.model.ContactMessage</class>
+        <class>com.luxa.ecommerce.model.Carts</class>
+        <class>com.luxa.ecommerce.model.CartItem</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -15,7 +17,7 @@
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:mysql://127.0.0.1:3306/ecommerce_accessoires?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value="motpasse"/>
+            <property name="jakarta.persistence.jdbc.password" value="Zahirazahira123@"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!-- Pour tester sans modifier le schéma existant -->

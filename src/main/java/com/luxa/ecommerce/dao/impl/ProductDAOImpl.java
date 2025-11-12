@@ -70,17 +70,14 @@ public class ProductDAOImpl implements ProductDAO {
     public Optional<Product> findById(Integer id) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-
-            String jpqlProduct = "SELECT p FROM Product p JOIN FETCH p.category WHERE p.id = :id";
+            String jpqlProduct = "SELECT DISTINCT p FROM Product p " +
+                    "LEFT JOIN FETCH p.category " +
+                    "LEFT JOIN FETCH p.images " +
+                    "LEFT JOIN FETCH p.variants " +
+                    "WHERE p.id = :id";
             TypedQuery<Product> queryProduct = em.createQuery(jpqlProduct, Product.class);
             queryProduct.setParameter("id", id);
             Product product = queryProduct.getSingleResult();
-
-
-            product.getImages().size();
-
-            product.getVariants().size();
-
             return Optional.ofNullable(product);
         } catch (NoResultException e) {
             return Optional.empty();
