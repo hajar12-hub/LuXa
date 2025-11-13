@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Page d'Accueil - Mise en page conforme à l'image fournie
+   ========================================================================== */
+
+/* --- Section d'introduction (remplace le 'hero') --- */
+.page-intro-section {
+    background-color: var(--text-light); /* Fond beige clair */
+    color: var(--bg-dark); /* Texte noir */
+    text-align: left;
+    padding: 64px 0;
+}
+
+.page-intro-section h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; /* ~40px */
+    font-weight: 600;
+    margin: 0 0 16px 0;
+}
+
+.page-intro-section p {
+    font-size: 1.125rem; /* 18px */
+    margin: 0 0 24px 0;
+    line-height: 1.6;
+    color: rgba(26, 26, 26, 0.8);
+}
+
+.intro-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-intro {
+    display: inline-block;
+    padding: 10px 24px;
+    border: 2px solid var(--bg-dark);
+    color: var(--bg-dark);
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-intro:hover {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+
+/* --- Section principale ("Nos Univers") --- */
+.section-padding {
+    padding: 80px 24px;
+    background-color: var(--text-light);
+}
+
+.container-xl {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.section-header {
+    text-align: left;
+    margin-bottom: 48px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.75rem;
+    font-weight: 600;
+    color: var(--bg-dark);
+    margin: 0 0 16px 0;
+}
+
+.section-subtitle {
+    font-size: 1.125rem;
+    color: rgba(26, 26, 26, 0.7);
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+
+/* --- Catégories (image + texte) --- */
+.category-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Espace vertical entre chaque bloc */
+}
+
+.category-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Image + texte */
+    gap: 64px;
+    align-items: center;
+}
+
+.category-item-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.category-item-content {
+    color: var(--bg-dark);
+}
+
+.category-item-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.category-item-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 0 0 24px 0;
+    color: rgba(26, 26, 26, 0.8);
+}
+
+.category-item-link {
+    color: var(--bg-dark);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s;
+}
+
+.category-item-link:hover {
+    color: var(--gold);
+}
+
+
+/* --- Alternance de la position de l'image --- */
+.category-item:nth-child(even) .category-item-image {
+    order: 2;
+}
+
+.category-item:nth-child(even) .category-item-content {
+    order: 1;
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .category-item {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    /* On rétablit l'ordre normal sur mobile */
+    .category-item:nth-child(even) .category-item-image {
+        order: 1;
+    }
+
+    .category-item:nth-child(even) .category-item-content {
+        order: 2;
+    }
+
+    .section-title {
+        font-size: 2.25rem;
+    }
+
+    .page-intro-section {
+        padding: 48px 16px;
+    }
+
+    .page-intro-section h1 {
+        font-size: 2rem;
+    }
+}
