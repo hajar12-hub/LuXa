@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+    <persistence-unit name="LuXaPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        
+        <!-- Toutes les entités JPA -->
+        <class>com.luxa.ecommerce.model.User</class>
+        <class>com.luxa.ecommerce.model.ContactMessage</class>
+        <class>com.luxa.ecommerce.model.Category</class>
+        <class>com.luxa.ecommerce.model.Product</class>
+        <class>com.luxa.ecommerce.model.ProductVariant</class>
+        <class>com.luxa.ecommerce.model.ProductImage</class>
+        <class>com.luxa.ecommerce.model.Promo</class>
+        <class>com.luxa.ecommerce.model.Order</class>
+        <class>com.luxa.ecommerce.model.OrderItem</class>
+        <class>com.luxa.ecommerce.model.Payment</class>
+        <class>com.luxa.ecommerce.model.Status</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <!-- ⚠️ IMPORTANT: Le nom de la base doit correspondre à celui dans shema.sql -->
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:mysql://127.0.0.1:3306/backend3_accessoires?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8"/>
+            <!-- ⚠️ MODIFIEZ CES IDENTIFIANTS selon votre configuration MySQL -->
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <!-- Pour tester sans modifier le schéma existant -->
+            <!-- <property name="hibernate.hbm2ddl.auto" value="validate"/>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
