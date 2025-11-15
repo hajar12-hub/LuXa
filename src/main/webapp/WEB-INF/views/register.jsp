@@ -6,8 +6,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Créer un compte — LuXa</title>
-    <!-- Chemin vers ton CSS (mets le bon path si différent) -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/site.css"/>
+    <!-- CSS global -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css"/>
 </head>
 <body>
 

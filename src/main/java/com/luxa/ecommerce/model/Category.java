@@ -27,6 +27,9 @@ public class Category {
     @Lob
     private String description;
 
+    @Column(name = "image_url", length = 1024)
+    private String imageUrl;
+
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
@@ -40,6 +43,9 @@ public class Category {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
     public List<Product> getProducts() { return products; }
     public void setProducts(List<Product> products) { this.products = products; }

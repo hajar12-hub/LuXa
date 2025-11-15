@@ -66,7 +66,7 @@ public class Order {
     private Promo promo;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new java.util.ArrayList<>();
 
     public enum OrderStatus {
         pending, confirmed, processing, shipped, delivered, cancelled

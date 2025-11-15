@@ -1,16 +1,13 @@
 package com.luxa.ecommerce.dao.impl;
 
-
-import java.util.List;
-import java.util.Optional;
-
 import com.luxa.ecommerce.dao.interfaces.CategoryDAO;
 import com.luxa.ecommerce.model.Category;
 import com.luxa.ecommerce.util.JpaUtil;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import java.util.List;
+import java.util.Optional;
 
 public class CategoryDAOImpl implements CategoryDAO {
 

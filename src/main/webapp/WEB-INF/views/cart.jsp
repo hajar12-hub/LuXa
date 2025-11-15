@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
+<%@ taglib uri="jakarta.tags.functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,7 +30,7 @@
                     <p class="cart-empty-text">
                         Découvrez nos créations d'exception et trouvez la pièce parfaite.
                     </p>
-                    <a href="${pageContext.request.contextPath}/products" class="btn btn-primary">
+                    <a href="${pageContext.request.contextPath}/catalogue" class="btn btn-primary">
                         Découvrir nos Collections
                     </a>
                 </div>
@@ -45,7 +46,12 @@
                                 <div class="cart-item-image">
                                     <c:choose>
                                         <c:when test="${not empty line.item.imageUrl}">
-                                            <img src="${line.item.imageUrl}" alt="${line.item.name}">
+                                            <c:set var="itemImageUrl" value="${line.item.imageUrl}"/>
+                                            <c:if test="${fn:startsWith(itemImageUrl, '/images/')}">
+                                                <c:set var="itemImageUrl" value="${pageContext.request.contextPath}${itemImageUrl}"/>
+                                            </c:if>
+                                            <img src="${itemImageUrl}" alt="${line.item.name}" 
+                                                 onerror="this.src='https://via.placeholder.com/150x150'">
                                         </c:when>
                                         <c:otherwise>
                                             <div class="cart-item-placeholder"></div>
@@ -129,12 +135,14 @@
                                 </div>
                             </div>
                             
-                            <a href="${pageContext.request.contextPath}/checkout" class="btn btn-checkout">
-                                <span class="btn-checkout-text">Procéder au Paiement</span>
-                                <span class="btn-checkout-glow"></span>
-                            </a>
+                            <form method="post" action="${pageContext.request.contextPath}/checkout" style="display: inline;">
+                                <button type="submit" class="btn btn-checkout">
+                                    <span class="btn-checkout-text">Procéder au Paiement</span>
+                                    <span class="btn-checkout-glow"></span>
+                                </button>
+                            </form>
                             
-                            <a href="${pageContext.request.contextPath}/products" class="btn btn-continue">
+                            <a href="${pageContext.request.contextPath}/catalogue" class="btn btn-continue">
                                 Continuer vos achats
                             </a>
                             

@@ -1,7 +1,7 @@
 package com.luxa.ecommerce.controller.cart;
 
-import com.luxa.ecommerce.util.CartUtils;
 import com.luxa.ecommerce.service.CartService;
+import com.luxa.ecommerce.util.CartUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,12 +16,32 @@ public class CartRemoveServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        int productId = Integer.parseInt(req.getParameter("productId"));
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
 
-        var cart = CartUtils.getOrCreateCart(req.getSession());
+        try {
+            String productIdStr = req.getParameter("productId");
 
-        cartService.remove(cart, productId);
+            if (productIdStr == null || productIdStr.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du produit manquant");
+                return;
+            }
 
-        resp.sendRedirect(req.getContextPath() + "/cart");
+            int productId = Integer.parseInt(productIdStr);
+
+            var cart = CartUtils.getOrCreateCart(req.getSession());
+            cartService.remove(cart, productId);
+            
+            // Sauvegarder le panier dans la session
+            req.getSession().setAttribute("cart", cart);
+
+            resp.sendRedirect(req.getContextPath() + "/cart");
+
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du produit invalide");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du produit");
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.luxa.ecommerce.controller.cart;
 
-import com.luxa.ecommerce.util.CartUtils;
 import com.luxa.ecommerce.service.CartService;
+import com.luxa.ecommerce.util.CartUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,14 +17,53 @@ public class CartAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
 
-        int productId = Integer.parseInt(req.getParameter("productId"));
-        int qty = Integer.parseInt(req.getParameter("qty"));
+        try {
+            // Récupérer les paramètres (gérer à la fois "quantity" et "qty")
+            String productIdStr = req.getParameter("productId");
+            String qtyStr = req.getParameter("quantity");
+            if (qtyStr == null || qtyStr.isEmpty()) {
+                qtyStr = req.getParameter("qty");
+            }
 
-        var cart = CartUtils.getOrCreateCart(req.getSession());
+            if (productIdStr == null || productIdStr.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du produit manquant");
+                return;
+            }
 
-        cartService.add(cart, productId, qty);
+            if (qtyStr == null || qtyStr.isEmpty()) {
+                qtyStr = "1"; // Valeur par défaut
+            }
 
-        resp.sendRedirect(req.getContextPath() + "/cart");
+            int productId = Integer.parseInt(productIdStr);
+            int qty = Integer.parseInt(qtyStr);
+
+            if (qty <= 0) {
+                qty = 1; // Minimum 1
+            }
+
+            var cart = CartUtils.getOrCreateCart(req.getSession());
+            cartService.add(cart, productId, qty);
+            
+            // Sauvegarder le panier dans la session
+            req.getSession().setAttribute("cart", cart);
+
+            // Rediriger vers la page d'origine ou le panier
+            String referer = req.getHeader("Referer");
+            if (referer != null && !referer.isEmpty()) {
+                resp.sendRedirect(referer);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/cart");
+            }
+
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Paramètres invalides");
+        } catch (IllegalArgumentException e) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de l'ajout au panier");
+        }
     }
 }

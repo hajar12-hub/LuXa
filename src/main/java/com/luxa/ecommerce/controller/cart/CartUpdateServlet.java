@@ -1,7 +1,7 @@
 package com.luxa.ecommerce.controller.cart;
 
-import com.luxa.ecommerce.util.CartUtils;
 import com.luxa.ecommerce.service.CartService;
+import com.luxa.ecommerce.util.CartUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,13 +16,46 @@ public class CartUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        int productId = Integer.parseInt(req.getParameter("productId"));
-        int qty = Integer.parseInt(req.getParameter("qty"));
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
 
-        var cart = CartUtils.getOrCreateCart(req.getSession());
+        try {
+            String productIdStr = req.getParameter("productId");
+            String qtyStr = req.getParameter("qty");
+            if (qtyStr == null || qtyStr.isEmpty()) {
+                qtyStr = req.getParameter("quantity");
+            }
 
-        cartService.update(cart, productId, qty);
+            if (productIdStr == null || productIdStr.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du produit manquant");
+                return;
+            }
 
-        resp.sendRedirect(req.getContextPath() + "/cart");
+            if (qtyStr == null || qtyStr.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Quantité manquante");
+                return;
+            }
+
+            int productId = Integer.parseInt(productIdStr);
+            int qty = Integer.parseInt(qtyStr);
+
+            if (qty < 0) {
+                qty = 0;
+            }
+
+            var cart = CartUtils.getOrCreateCart(req.getSession());
+            cartService.update(cart, productId, qty);
+            
+            // Sauvegarder le panier dans la session
+            req.getSession().setAttribute("cart", cart);
+
+            resp.sendRedirect(req.getContextPath() + "/cart");
+
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Paramètres invalides");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du panier");
+        }
     }
 }

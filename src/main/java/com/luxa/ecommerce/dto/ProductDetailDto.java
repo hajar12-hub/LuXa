@@ -9,6 +9,7 @@ public class ProductDetailDto {
     private double price;
     private Integer stockQuantity;
     private String categoryName;
+    private Integer categoryId;
     private List<ProductImageDto> images;
     private List<ProductVariantDto> variants;
 
@@ -61,6 +62,14 @@ public class ProductDetailDto {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public List<ProductImageDto> getImages() {

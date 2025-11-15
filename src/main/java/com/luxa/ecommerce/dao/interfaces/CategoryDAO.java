@@ -1,9 +1,8 @@
 package com.luxa.ecommerce.dao.interfaces;
 
+import com.luxa.ecommerce.model.Category;
 import java.util.List;
 import java.util.Optional;
-
-import com.luxa.ecommerce.model.Category;
 
 public interface CategoryDAO {
 

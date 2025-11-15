@@ -70,10 +70,11 @@ public class ProductDAOImpl implements ProductDAO {
     public Optional<Product> findById(Integer id) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
+            // Ne fetcher que les images pour éviter MultipleBagFetchException
+            // Les variants ne sont pas nécessaires pour la plupart des cas d'usage
             String jpqlProduct = "SELECT DISTINCT p FROM Product p " +
                     "LEFT JOIN FETCH p.category " +
                     "LEFT JOIN FETCH p.images " +
-                    "LEFT JOIN FETCH p.variants " +
                     "WHERE p.id = :id";
             TypedQuery<Product> queryProduct = em.createQuery(jpqlProduct, Product.class);
             queryProduct.setParameter("id", id);
@@ -91,7 +92,9 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> findAll() {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            String jpql = "SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images";
+            String jpql = "SELECT DISTINCT p FROM Product p " +
+                    "LEFT JOIN FETCH p.category " +
+                    "LEFT JOIN FETCH p.images";
             TypedQuery<Product> query = em.createQuery(jpql, Product.class);
             return query.getResultList();
         } finally {
@@ -103,7 +106,9 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> findByCategoryId(Integer categoryId) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            String jpql = "SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images " +
+            String jpql = "SELECT DISTINCT p FROM Product p " +
+                    "LEFT JOIN FETCH p.category " +
+                    "LEFT JOIN FETCH p.images " +
                     "WHERE p.category.id = :categoryId";
             TypedQuery<Product> query = em.createQuery(jpql, Product.class);
             query.setParameter("categoryId", categoryId);
@@ -117,7 +122,10 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> search(Integer categoryId, String keyword, Double minPrice, Double maxPrice) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            StringBuilder jpql = new StringBuilder("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images WHERE 1=1");
+            StringBuilder jpql = new StringBuilder(
+                    "SELECT DISTINCT p FROM Product p " +
+                            "LEFT JOIN FETCH p.category " +
+                            "LEFT JOIN FETCH p.images WHERE 1=1");
 
             if (categoryId != null) {
                 jpql.append(" AND p.category.id = :categoryId");
