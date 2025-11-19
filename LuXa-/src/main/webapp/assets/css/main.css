@@ -1,0 +1,1278 @@
+/* ====== Palette & bases ====== */
+:root{
+    --bg-dark: #1A1A1A;
+    --text-light: #F5F0E8;   /* beige clair */
+    --gold: #BFA181;         /* doré */
+    --gold-700:#A08060;
+    --header-h: 72px
+}
+
+* { box-sizing: border-box; }
+body { margin:0;
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    padding-top: var(--header-h);
+    }
+
+/* ====== Header fixé en haut ====== */
+.luxa-header{
+    height: var(--header-h);
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+
+    background: rgba(245, 240, 232, 0.85);   /* beige translucide */
+    backdrop-filter: blur(10px);             /* effet verre */
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
+}
+.luxa-header.is-scrolled{
+    /* optionnel: état "après scroll" si tu ajoutes la classe en JS */
+    background: rgba(26,26,26,0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+
+.luxa-container{
+    max-width: 1120px; /* ~ max-w-7xl */
+    margin: 0 auto;
+    padding: 16px 24px; /* py-4 px-6 */
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 16px;
+}
+h1, h2, h3, [id]{
+    scroll-margin-top: calc(var(--header-h) + 8px);
+}
+
+/* ====== Logo ====== */
+.luxa-logo{
+    color: white;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;           /* ~32px */
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    transition: transform .2s ease;
+    display:inline-block;
+}
+.luxa-logo:hover{ transform: scale(1.05); }
+.x-gold{ color: var(--gold); }
+
+/* ====== Navigation ====== */
+.luxa-nav{
+    display:flex;
+    align-items:center;
+    gap: 32px;  /* gap-8 */
+}
+.nav-link{
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s ease;
+}
+.nav-link:hover{ color: var(--gold); }
+
+/* --- Patch visibilité icônes header --- */
+.luxa-actions{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    color:#1A1A1A;              /* couleur par défaut lisible */
+    position: relative;
+    z-index: 2;                 /* passe devant tout éventuel overlay/nav */
+}
+
+.luxa-nav{ position: relative; z-index: 1; }
+
+/* Header seulement */
+.luxa-header .icon-btn{
+    position: relative;
+    display: inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:36px; height:36px;
+    color:#BFA181;
+    background: transparent;
+    border:0;
+    cursor:pointer;
+    transition: transform .15s, color .2s;
+}
+.luxa-header .icon-btn:hover{ color:#1A1A1A; }
+
+/* Footer seulement (remplace tes règles globales du bas) */
+.luxa-footer .icon-btn{
+    width:40px; height:40px;
+    display:inline-flex; align-items:center; justify-content:center;
+    color:#F5F0E8;
+    background:transparent; border:0; cursor:pointer;
+    transition:transform .15s ease, color .2s ease;
+}
+.luxa-footer .icon-btn:hover{ transform:scale(1.1); color:#BFA181; }
+
+/* Assure la prise de couleur */
+.luxa-header .icon-btn svg,
+.luxa-footer .icon-btn svg{
+    width:20px; height:20px;
+    fill:none;
+    stroke:currentColor;
+}
+
+
+/* ⚡ assure que le SVG prend bien la couleur et est visible */
+.icon-btn svg,
+.icon{
+    width:20px; height:20px;    /* taille explicite */
+    display:block;
+    fill:none;                  /* les icônes Lucide sont en stroke */
+    stroke:currentColor !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:auto;
+}
+
+/* au cas où un style global cacherait les svg au repos */
+.icon-btn .icon{ opacity:1 !important; }
+
+/* badge panier */
+.cart{ text-decoration:none; }
+.badge{
+    position:absolute; top:-6px; right:-6px;
+    min-width:20px; height:20px; padding:0 6px;
+    border-radius:999px;
+    background:#BFA181; color:#1A1A1A;
+    font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    line-height:1;
+}
+
+
+/* ====== Responsive ====== */
+@media (max-width: 820px){
+    .luxa-nav{ display:none; } /* cacher la nav sur mobile (simple) */
+}
+/* Bouton Connexion/Déconnexion */
+.auth-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:36px;
+    padding:0 14px;
+    border-radius:999px;
+    background:#BFA181;
+    color:#F5F0E8;
+    text-decoration:none;
+    font-weight:600;
+    letter-spacing:.02em;
+    transition:transform .15s ease, background .2s ease, color .2s ease;
+}
+
+/* IMPORTANT : forcer la couleur et retirer l'underline même en état "visited" */
+.auth-btn:link,
+.auth-btn:visited{
+    color:#F5F0E8 !important;
+    text-decoration:none !important;
+}
+
+.auth-btn:hover{
+    transform:scale(1.03);
+    background:#000;
+    color:#F5F0E8;
+}
+
+/* Si tu as des styles globaux qui ciblent .luxa-actions a, neutralise-les */
+.luxa-actions a.auth-btn{
+    color:#F5F0E8 !important;
+}
+
+
+/* --- Footer LuXa --- */
+.luxa-footer{
+    background:#1A1A1A;
+    color:#F5F0E8;
+    padding: 64px 24px;        /* py-16 px-6 */
+}
+.luxa-foot-container{
+    max-width:1120px;          /* ≈ max-w-7xl */
+    margin:0 auto;
+}
+.luxa-foot-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:48px;                  /* gap-12 */
+    margin-bottom:48px;
+}
+@media (min-width: 768px){
+    .luxa-foot-grid{ grid-template-columns: repeat(4,1fr); }
+}
+
+.foot-col{ min-width:0; }
+.foot-brand{
+    display:inline-block;
+    text-decoration:none;
+    color:#F5F0E8;
+    font-family:'Playfair Display', serif;
+    font-size:2rem;
+    font-weight:600;
+    letter-spacing:.15em;
+    margin-bottom:12px;
+}
+.x-gold{ color:#BFA181; }
+.foot-tagline{ color:rgba(245,240,232,.7); margin:0; }
+
+.foot-title{
+    margin:0 0 12px 0;
+    font-family:'Playfair Display', serif;
+    font-size:1.25rem;
+    font-weight:600;
+    color:#F5F0E8;
+}
+.foot-list{ list-style:none; padding:0; margin:0; }
+.foot-list a{
+    display:inline-block;
+    text-decoration:none;
+    color:rgba(245,240,232,.7);
+    padding:4px 0;
+    transition:color .2s ease;
+}
+.foot-list a:hover{ color:#BFA181; }
+
+.socials{ display:flex; gap:16px; }
+.icon-btn{
+    width:40px; height:40px;
+    display:inline-flex; align-items:center; justify-content:center;
+    color:#F5F0E8;
+    background:transparent; border:0; cursor:pointer;
+    transition:transform .15s ease, color .2s ease;
+}
+.icon-btn:hover{ transform:scale(1.1); color:#BFA181; }
+
+.foot-sep{
+    border:0;
+    border-top:1px solid rgba(245,240,232,.2);
+    margin:24px 0 0 0;
+}
+.foot-copy{
+    text-align:center;
+    color:rgba(245,240,232,.5);
+    margin:16px 0 0 0;
+    font-size:.95rem;
+}
+/* ---- Login (LuXa) ---- */
+.auth-wrap{
+    min-height: calc(100vh - 120px);   /* laisse de la place au header/footer */
+    background: #F5F0E8;               /* beige */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 24px;                /* py-24 px-6 */
+}
+
+/* Carte blanche centrée */
+.card.form-card{
+    width: 100%;
+    max-width: 520px;                  /* ~max-w-md */
+    background: #fff;
+    padding: 48px;                     /* p-12 */
+    box-shadow: 0 8px 30px rgba(0,0,0,.06);
+}
+
+/* Titre + texte */
+.card.form-card h2{
+    margin: 0 0 24px 0;
+    text-align: center;
+    color: #1A1A1A;
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+}
+.form-muted{
+    margin: 0 0 32px 0;
+    color: rgba(26,26,26,.70);
+    text-align: center;
+    line-height: 1.55;
+}
+
+/* Erreur serveur */
+.error{
+    background: #fbe9ea;
+    color: #8a1f2d;
+    border-left: 4px solid #d4183d;
+    padding: 12px 14px;
+    margin: 0 0 24px 0;
+    font-size: .95rem;
+}
+
+/* Forme générale */
+.row{
+    display: grid;
+    gap: 32px;                         /* space-y-8 */
+}
+
+/* Inputs “minimal” à la LuXa */
+.input{
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(26,26,26,.20);
+    padding: 22px 0 10px;              /* pt-6 pb-2 */
+    font-size: 16px;
+    color: #1A1A1A;
+    outline: none;
+    transition: border-color .2s ease;
+}
+.input:focus{
+    border-bottom-color: #BFA181;      /* or */
+}
+.input::placeholder{
+    color: rgba(26,26,26,.70);
+}
+
+/* Zone actions : bouton + lien */
+.actions{
+    display: grid;
+    gap: 16px;
+    align-items: center;
+}
+.actions .btn{
+    order: 1;
+}
+.actions .link{
+    order: 2;
+    justify-self: center;
+}
+
+/* Bouton “Se connecter” */
+.btn{
+    width: 100%;
+    background: #1A1A1A;              /* noir */
+    color: #F5F0E8;                    /* beige clair */
+    border: 0;
+    padding: 16px 0;                   /* py-4 */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .2s ease, transform .1s ease;
+}
+.btn:hover{ background:#000; transform: scale(1.02); }
+.btn:active{ transform: scale(.98); }
+
+/* Lien texte (Créer un compte) */
+.link{
+    color: #1A1A1A;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s ease;
+}
+.link:hover{ color:#BFA181; }
+
+/* Petits écrans */
+@media (max-width: 480px){
+    .card.form-card{ padding: 36px 24px; }
+}
+
+
+/* ====== Register (LuXa) – sans changer ton HTML ====== */
+
+/* fond + centrage */
+.auth-wrap{
+    min-height: calc(100vh - 120px);   /* espace pour header/footer */
+    background: #F5F0E8;               /* beige */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 24px;                /* py-24 px-6 */
+}
+
+/* carte blanche */
+.form-card{
+    width: 100%;
+    max-width: 520px;                  /* ≈ max-w-md */
+    background: #fff;
+    padding: 48px;                     /* p-12 */
+    box-shadow: 0 8px 30px rgba(0,0,0,.06);
+}
+
+/* titres & paragraphe */
+.form-card h2{
+    margin: 0 0 24px 0;
+    text-align: center;
+    color: #1A1A1A;
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+}
+.form-muted{
+    margin: 0 0 32px 0;
+    color: rgba(26,26,26,.70);
+    text-align: center;
+    line-height: 1.55;
+}
+
+/* messages d'erreur */
+.error{
+    background: #fbe9ea;
+    color: #8a1f2d;
+    border-left: 4px solid #d4183d;
+    padding: 12px 14px;
+    margin: 0 0 24px 0;
+    font-size: .95rem;
+}
+
+/* groupes de champs */
+.fgroup{ margin-bottom: 32px; }
+.fgroup label{
+    display: block;
+    margin-bottom: 10px;
+    color: rgba(26,26,26,.70);
+    transition: color .2s ease;
+}
+.fgroup:focus-within label{ color:#BFA181; } /* effet focus façon React */
+
+/* inputs “underline” */
+.input{
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(26,26,26,.20);
+    padding: 8px 0 10px;
+    font-size: 16px;
+    color: #1A1A1A;
+    outline: none;
+    transition: border-color .2s ease;
+}
+.input:focus{ border-bottom-color:#BFA181; }
+
+/* zone actions : bouton + lien */
+.actions{
+    display: grid;
+    gap: 16px;
+    align-items: center;
+    margin-top: 8px;
+}
+.actions .btn{
+    order: 1; /* bouton d'abord */
+}
+.actions .link{
+    order: 2;
+    justify-self: center;
+}
+
+/* bouton principal */
+.btn{
+    width: 100%;
+    background: #1A1A1A;
+    color: #F5F0E8;
+    border: 0;
+    padding: 16px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .2s ease, transform .1s ease;
+}
+.btn:hover{ background:#000; transform: scale(1.02); }
+.btn:active{ transform: scale(.98); }
+
+/* lien secondaire */
+.link{
+    color:#1A1A1A;
+    text-decoration:none;
+    font-weight:500;
+    transition: color .2s ease;
+}
+.link:hover{ color:#BFA181; }
+
+/* responsive */
+@media (max-width: 480px){
+    .form-card{ padding: 36px 24px; }
+}
+/* ================================
+   PROFIL — Labels fixes (pas flottants)
+   ================================ */
+
+/* on cible uniquement le bloc profil (ton <div class="container">) */
+.container .form-group label{
+    position: static !important;         /* << stoppe le positionnement absolu */
+    display: block !important;
+    margin: 0 0 8px !important;
+    transform: none !important;
+    pointer-events: auto !important;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.2;
+    color: #1A1A1A;
+    font-weight: 500;
+}
+
+/* inputs propres (ligne de base) */
+.container .form-group .form-control,
+.container .form-group input.form-control,
+.container .form-group textarea.form-control{
+    display: block;
+    width: 100%;
+    padding: 12px 0 8px;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(26,26,26,.25);
+    color: #1A1A1A;
+    font-size: 1rem;
+    outline: none;
+}
+
+.container .form-group .form-control:focus{
+    border-bottom-color: #BFA181;
+}
+
+/* aide sous le champ */
+.container .form-group small{
+    display: block;
+    margin-top: 6px;
+    color: rgba(26,26,26,.55);
+    font-size: .85rem;
+}
+
+
+/* ---------- CONTACT PAGE (LuXa) ---------- */
+/* S'appuie sur :root, .btn, .input définis dans main.css */
+
+.contact-wrap{
+    max-width: 1200px;
+    margin: 48px auto;
+    padding: 0 24px;
+    color: #1A1A1A;
+}
+
+.contact-title{
+    font-family: "Playfair Display", serif;
+    font-size: 56px;
+    margin: 0 0 8px 0;
+}
+
+.contact-lead{
+    margin: 0 0 28px 0;
+    font-size: 18px;
+    color: rgba(26,26,26,.75);
+}
+
+.contact-grid{
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 40px;
+}
+
+.contact-card{
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+.contact-section-title{
+    margin: 0 0 12px 0;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+}
+
+.contact-info{ margin: 18px 0; }
+.contact-info .label{
+    font-weight: 600;
+    color: rgba(26,26,26,.65);
+    margin-bottom: 6px;
+}
+
+/* Réutilise tes groupes existants */
+.fgroup{ margin: 18px 0 22px; }
+.fgroup label{
+    display:block;
+    margin: 0 0 8px 0;
+    color: rgba(26,26,26,.70);
+}
+
+/* Input underline hérité de main.css (.input) */
+/* Petits ajustements pour textarea de contact */
+.contact-textarea{
+    min-height: 140px;
+    resize: vertical;
+    padding-top: 12px;
+}
+
+/* erreurs de champ + flash succès */
+.field-error{
+    color: #b00020;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.contact-flash{
+    background: #eaf6ec;
+    color: #135f2a;
+    border: 1px solid #bfe5c9;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+    .contact-grid{ grid-template-columns: 1fr; }
+    .contact-title{ font-size: 40px; }
+}
+
+/* ================================
+   PRODUCT DETAIL PAGE (LuXa)
+   ================================ */
+
+.product-detail-wrap{
+    background: #F5F0E8;
+    padding: 48px 0;
+    min-height: calc(100vh - 200px);
+}
+
+.container-xl{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Breadcrumb */
+.breadcrumb-nav{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: rgba(26,26,26,.6);
+}
+
+.breadcrumb-nav a{
+    color: rgba(26,26,26,.6);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.breadcrumb-nav a:hover{
+    color: #BFA181;
+}
+
+.breadcrumb-nav .current{
+    color: #1A1A1A;
+    font-weight: 500;
+}
+
+/* Grille produit */
+.product-detail-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+/* Images produit */
+.product-images{
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+}
+
+.main-image-container{
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.main-image{
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.thumbnail-list{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.thumbnail-btn{
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border: 2px solid transparent;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .2s ease, transform .15s ease;
+}
+
+.thumbnail-btn:hover,
+.thumbnail-btn.active{
+    border-color: #BFA181;
+    transform: scale(1.05);
+}
+
+.thumbnail{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Informations produit */
+.product-info{
+    color: #1A1A1A;
+}
+
+.product-category{
+    font-size: 14px;
+    color: #BFA181;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.product-title{
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    color: #1A1A1A;
+}
+
+.product-price-section{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.product-price{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1A1A1A;
+}
+
+.stock-badge{
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.stock-badge.in-stock{
+    background: #eaf6ec;
+    color: #135f2a;
+}
+
+.stock-badge.out-of-stock{
+    background: #fbe9ea;
+    color: #8a1f2d;
+}
+
+.product-description{
+    margin-bottom: 32px;
+}
+
+.product-description h3{
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 0 0 12px 0;
+    color: #1A1A1A;
+}
+
+.product-description p{
+    line-height: 1.7;
+    color: rgba(26,26,26,.8);
+    margin: 0;
+}
+
+/* Variantes */
+.product-variants{
+    margin-bottom: 32px;
+}
+
+.product-variants h3{
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    margin: 0 0 16px 0;
+    color: #1A1A1A;
+}
+
+.variant-list{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.variant-item{
+    padding: 16px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(26,26,26,.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.variant-info{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.variant-name{
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.variant-sku{
+    font-size: 12px;
+    color: rgba(26,26,26,.6);
+}
+
+.variant-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.variant-price{
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.variant-stock{
+    font-size: 12px;
+    color: rgba(26,26,26,.6);
+}
+
+/* Actions produit */
+.product-actions{
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(26,26,26,.1);
+}
+
+.quantity-selector{
+    margin-bottom: 20px;
+}
+
+.quantity-selector label{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #1A1A1A;
+}
+
+.quantity-controls{
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 2px solid rgba(26,26,26,.2);
+    border-radius: 8px;
+    width: fit-content;
+    overflow: hidden;
+}
+
+.qty-btn{
+    width: 40px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: #1A1A1A;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s ease;
+}
+
+.qty-btn:hover{
+    background: rgba(26,26,26,.05);
+}
+
+.qty-input{
+    width: 60px;
+    height: 44px;
+    border: 0;
+    border-left: 1px solid rgba(26,26,26,.1);
+    border-right: 1px solid rgba(26,26,26,.1);
+    text-align: center;
+    font-size: 16px;
+    color: #1A1A1A;
+    outline: none;
+}
+
+.btn-add-cart{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-add-cart:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error-message{
+    text-align: center;
+    padding: 64px 24px;
+}
+
+.error-message h2{
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 0 0 16px 0;
+    color: #1A1A1A;
+}
+
+.error-message p{
+    margin: 0 0 24px 0;
+    color: rgba(26,26,26,.7);
+}
+
+.btn-secondary{
+    display: inline-block;
+    padding: 12px 24px;
+    background: #1A1A1A;
+    color: #F5F0E8;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background .2s ease;
+}
+
+.btn-secondary:hover{
+    background: #000;
+}
+
+/* Responsive product detail */
+@media (max-width: 980px){
+    .product-detail-grid{
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .product-images{
+        position: static;
+    }
+
+    .product-title{
+        font-size: 2rem;
+    }
+}
+
+/* ================================
+   CART PAGE (LuXa)
+   ================================ */
+
+.cart-wrap{
+    background: #F5F0E8;
+    padding: 48px 0;
+    min-height: calc(100vh - 200px);
+}
+
+.cart-title{
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0 0 40px 0;
+    color: #1A1A1A;
+}
+
+/* Panier vide */
+.cart-empty{
+    text-align: center;
+    padding: 80px 24px;
+}
+
+.empty-icon{
+    color: rgba(26,26,26,.3);
+    margin: 0 auto 24px;
+    display: block;
+}
+
+.cart-empty h2{
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 0 0 12px 0;
+    color: #1A1A1A;
+}
+
+.cart-empty p{
+    margin: 0 0 32px 0;
+    color: rgba(26,26,26,.7);
+    font-size: 1.1rem;
+}
+
+/* Grille panier */
+.cart-grid{
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 48px;
+    align-items: start;
+}
+
+/* Articles panier */
+.cart-items{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.cart-item{
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 120px 1fr auto auto auto;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.item-image{
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.item-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-details{
+    min-width: 0;
+}
+
+.item-name{
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.item-name a{
+    color: #1A1A1A;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.item-name a:hover{
+    color: #BFA181;
+}
+
+.item-price-unit{
+    font-size: 14px;
+    color: rgba(26,26,26,.6);
+}
+
+.item-quantity{
+    display: flex;
+    justify-content: center;
+}
+
+.quantity-controls{
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 2px solid rgba(26,26,26,.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.qty-btn{
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    color: #1A1A1A;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s ease;
+}
+
+.qty-btn:hover{
+    background: rgba(26,26,26,.05);
+}
+
+.qty-input{
+    width: 50px;
+    height: 36px;
+    border: 0;
+    border-left: 1px solid rgba(26,26,26,.1);
+    border-right: 1px solid rgba(26,26,26,.1);
+    text-align: center;
+    font-size: 14px;
+    color: #1A1A1A;
+    outline: none;
+}
+
+.item-total{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 120px;
+}
+
+.item-total-label{
+    font-size: 12px;
+    color: rgba(26,26,26,.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.item-total-price{
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1A1A1A;
+}
+
+.item-actions{
+    display: flex;
+    justify-content: center;
+}
+
+.btn-remove{
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: rgba(26,26,26,.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background .2s ease, color .2s ease;
+}
+
+.btn-remove:hover{
+    background: #fbe9ea;
+    color: #d4183d;
+}
+
+/* Récapitulatif */
+.cart-summary{
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+}
+
+.summary-card{
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+
+.summary-title{
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    color: #1A1A1A;
+}
+
+.summary-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.summary-row span:first-child{
+    color: rgba(26,26,26,.7);
+}
+
+.summary-value{
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.summary-separator{
+    border: 0;
+    border-top: 1px solid rgba(26,26,26,.1);
+    margin: 24px 0;
+}
+
+.summary-total{
+    font-size: 1.25rem;
+    margin-top: 8px;
+}
+
+.summary-total span{
+    color: #1A1A1A;
+    font-weight: 700;
+}
+
+.btn-checkout{
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.link-continue{
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    color: #1A1A1A;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s ease;
+}
+
+.link-continue:hover{
+    color: #BFA181;
+}
+
+/* Responsive cart */
+@media (max-width: 980px){
+    .cart-grid{
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .cart-summary{
+        position: static;
+    }
+
+    .cart-item{
+        grid-template-columns: 100px 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 16px;
+    }
+
+    .item-quantity{
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+    }
+
+    .item-total{
+        grid-column: 2;
+        align-items: flex-end;
+    }
+
+    .item-actions{
+        grid-column: 1;
+        grid-row: 3;
+    }
+}
