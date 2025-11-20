@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact name="LuXa">
+    <output-path>$PROJECT_DIR$/LuXa-/src/main/webapp</output-path>
+    <root id="root" />
+  </artifact>
+</component>
