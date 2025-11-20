@@ -5,6 +5,9 @@
 <%
     String ctx = request.getContextPath();
 %>
+<%
+    String authRole = (String) session.getAttribute("authRole");
+%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -25,6 +28,8 @@
 <body style="background: #F5F0E8;">
 
 <jsp:include page="/WEB-INF/views/_header.jsp"/>
+
+
 
 <main class="catalogue-wrap" style="background: #F5F0E8;">
     <div class="catalogue-container">

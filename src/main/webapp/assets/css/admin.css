@@ -1,0 +1,603 @@
+/* ==========================================================================
+   Dashboard Admin - Style LuXa
+   ========================================================================== */
+
+.admin-dashboard {
+    background: #F5F0E8;
+    min-height: calc(100vh - var(--header-h));
+    padding: 48px 0;
+}
+
+.admin-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ====== Header du Dashboard ====== */
+.admin-header {
+    margin-bottom: 48px;
+}
+
+.admin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin: 0 0 12px 0;
+    letter-spacing: 0.02em;
+}
+
+.admin-subtitle {
+    font-size: 1.125rem;
+    color: rgba(26, 26, 26, 0.7);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ====== Grille des Cartes Admin ====== */
+.admin-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+}
+
+/* ====== Carte Admin ====== */
+.admin-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(26, 26, 26, 0.05);
+}
+
+.admin-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #BFA181, #A08060);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.admin-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Icône de la carte */
+.admin-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #BFA181 0%, #A08060 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 24px;
+}
+
+.admin-card-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Titre de la carte */
+.admin-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin: 0 0 12px 0;
+}
+
+/* Description de la carte */
+.admin-card-description {
+    color: rgba(26, 26, 26, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+}
+
+/* Actions de la carte */
+.admin-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* Boutons dans les cartes */
+.admin-card .admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.admin-btn-primary {
+    background: #1A1A1A;
+    color: #F5F0E8;
+}
+
+.admin-btn-primary:hover {
+    background: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.admin-btn-secondary {
+    background: #F5F0E8;
+    color: #1A1A1A;
+    border: 2px solid rgba(26, 26, 26, 0.1);
+}
+
+.admin-btn-secondary:hover {
+    background: #fff;
+    border-color: #BFA181;
+    color: #BFA181;
+    transform: translateY(-1px);
+}
+
+.admin-btn-icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* ====== Statistiques (optionnel pour plus tard) ====== */
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.admin-stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    border-left: 4px solid #BFA181;
+}
+
+.admin-stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin: 0 0 8px 0;
+}
+
+.admin-stat-label {
+    font-size: 0.875rem;
+    color: rgba(26, 26, 26, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+    .admin-title {
+        font-size: 2.25rem;
+    }
+
+    .admin-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .admin-card {
+        padding: 24px;
+    }
+
+    .admin-card-actions {
+        flex-direction: column;
+    }
+
+    .admin-card .admin-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-dashboard {
+        padding: 32px 0;
+    }
+
+    .admin-container {
+        padding: 0 16px;
+    }
+
+    .admin-title {
+        font-size: 1.875rem;
+    }
+
+    .admin-card-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .admin-card-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* ====== Tableau des Produits ====== */
+.admin-table-container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.admin-table thead {
+    background: #F5F0E8;
+    border-bottom: 2px solid rgba(26, 26, 26, 0.1);
+}
+
+.admin-table th {
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #1A1A1A;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid rgba(26, 26, 26, 0.05);
+    transition: background 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(191, 161, 129, 0.05);
+}
+
+.admin-table td {
+    padding: 16px 12px;
+    vertical-align: middle;
+}
+
+.admin-table-id {
+    font-weight: 600;
+    color: rgba(26, 26, 26, 0.6);
+    font-size: 0.875rem;
+}
+
+.admin-table-image {
+    width: 80px;
+}
+
+.admin-table-image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.admin-table-image-placeholder {
+    width: 60px;
+    height: 60px;
+    background: #F5F0E8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(26, 26, 26, 0.3);
+}
+
+.admin-table-image-placeholder svg {
+    width: 24px;
+    height: 24px;
+}
+
+.admin-table-name {
+    min-width: 200px;
+}
+
+.admin-table-name strong {
+    display: block;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+}
+
+.admin-table-description {
+    font-size: 0.85rem;
+    color: rgba(26, 26, 26, 0.6);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.admin-table-price {
+    font-weight: 600;
+    color: #1A1A1A;
+    font-size: 1rem;
+}
+
+.admin-table-category,
+.admin-table-stock,
+.admin-table-status {
+    text-align: center;
+}
+
+.admin-table-empty {
+    text-align: center;
+    padding: 40px !important;
+}
+
+/* ====== Badges ====== */
+.admin-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.admin-badge-category {
+    background: rgba(191, 161, 129, 0.15);
+    color: #A08060;
+}
+
+.admin-badge-success {
+    background: #eaf6ec;
+    color: #135f2a;
+}
+
+.admin-badge-danger {
+    background: #fbe9ea;
+    color: #8a1f2d;
+}
+
+.admin-badge-active {
+    background: #eaf6ec;
+    color: #135f2a;
+}
+
+.admin-badge-inactive {
+    background: #fbe9ea;
+    color: #8a1f2d;
+}
+
+/* ====== Actions du Tableau ====== */
+.admin-table-actions {
+    width: 200px;
+}
+
+.admin-actions-group {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-action-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(26, 26, 26, 0.6);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.admin-action-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+}
+
+.admin-action-edit:hover {
+    background: rgba(191, 161, 129, 0.15);
+    color: #BFA181;
+}
+
+.admin-action-images:hover {
+    background: rgba(26, 26, 26, 0.1);
+    color: #1A1A1A;
+}
+
+.admin-action-activate:hover {
+    background: #eaf6ec;
+    color: #135f2a;
+}
+
+.admin-action-deactivate:hover {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.admin-action-delete:hover {
+    background: #fbe9ea;
+    color: #d4183d;
+}
+
+/* ====== Alertes ====== */
+.admin-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.admin-alert-error {
+    background: #fbe9ea;
+    color: #8a1f2d;
+    border-left: 4px solid #d4183d;
+}
+
+.admin-alert svg {
+    flex-shrink: 0;
+}
+
+/* ====== Gestion des Images ====== */
+.admin-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.admin-image-item {
+    background: #F5F0E8;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.admin-image-preview {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    background: #fff;
+    overflow: hidden;
+}
+
+.admin-image-preview img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-image-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #BFA181;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.admin-image-info {
+    padding: 12px;
+}
+
+.admin-image-form {
+    margin-top: 16px;
+}
+
+/* ====== Responsive Tableau ====== */
+@media (max-width: 1024px) {
+    .admin-table-container {
+        padding: 16px;
+    }
+
+    .admin-table {
+        font-size: 0.875rem;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 12px 8px;
+    }
+
+    .admin-table-name {
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-table-container {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .admin-table {
+        font-size: 0.8rem;
+    }
+
+    .admin-table th {
+        font-size: 0.75rem;
+        padding: 10px 6px;
+    }
+
+    .admin-table td {
+        padding: 10px 6px;
+    }
+
+    .admin-table-image {
+        width: 60px;
+    }
+
+    .admin-table-image img,
+    .admin-table-image-placeholder {
+        width: 50px;
+        height: 50px;
+    }
+
+    .admin-actions-group {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .admin-action-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .admin-action-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .admin-images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+    }
+}
+

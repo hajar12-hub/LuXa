@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.luxa.ecommerce.dao.impl.ProductDAOImpl;
+import com.luxa.ecommerce.dao.impl.ProductImageDAOImpl;
 import com.luxa.ecommerce.dao.impl.ProductVariantDAOImpl;
 import com.luxa.ecommerce.dao.interfaces.ProductDAO;
+import com.luxa.ecommerce.dao.interfaces.ProductImageDAO;
 import com.luxa.ecommerce.dao.interfaces.ProductVariantDAO;
 import com.luxa.ecommerce.dto.ProductDetailDto;
 import com.luxa.ecommerce.dto.ProductImageDto;
@@ -23,11 +25,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ProductDetailPageServlet extends HttpServlet {
 
     private ProductDAO productDao;
+    private ProductImageDAO productImageDAO;
     private ProductVariantDAO variantDao;
 
     @Override
     public void init() throws ServletException {
         this.productDao = new ProductDAOImpl();
+        this.productImageDAO = new ProductImageDAOImpl();
         this.variantDao = new ProductVariantDAOImpl();
     }
 
@@ -46,6 +50,16 @@ public class ProductDetailPageServlet extends HttpServlet {
 
             if (productOptional.isPresent()) {
                 Product product = productOptional.get();
+                
+                // Charger les images explicitement pour éviter LazyInitializationException
+                try {
+                    java.util.List<com.luxa.ecommerce.model.ProductImage> images = productImageDAO.findByProductId(product.getId());
+                    product.setImages(images);
+                } catch (Exception ex) {
+                    System.err.println("Erreur lors du chargement des images pour le produit " + product.getId() + ": " + ex.getMessage());
+                    product.setImages(new java.util.ArrayList<>());
+                }
+                
                 ProductDetailDto dto = convertToDetailDto(product);
                 req.setAttribute("product", dto);
                 req.getRequestDispatcher("/WEB-INF/views/product-detail.jsp").forward(req, resp);
