@@ -84,7 +84,7 @@
                       placeholder="Rue, immeuble, ville, code postal...">${empty old_address ? user.address : old_address}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary profile-submit">Enregistrer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
     </form>
 </div>
 

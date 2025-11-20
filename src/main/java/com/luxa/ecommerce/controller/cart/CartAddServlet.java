@@ -49,8 +49,13 @@ public class CartAddServlet extends HttpServlet {
             // Sauvegarder le panier dans la session
             req.getSession().setAttribute("cart", cart);
 
-            // Rediriger directement vers le panier pour confirmer l'ajout
-            resp.sendRedirect(req.getContextPath() + "/cart");
+            // Rediriger vers la page d'origine ou le panier
+            String referer = req.getHeader("Referer");
+            if (referer != null && !referer.isEmpty()) {
+                resp.sendRedirect(referer);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/cart");
+            }
 
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Paramètres invalides");

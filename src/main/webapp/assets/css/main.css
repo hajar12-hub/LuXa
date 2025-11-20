@@ -31,9 +31,6 @@ body { margin:0;
     backdrop-filter: blur(8px);
     box-shadow: 0 10px 25px rgba(0,0,0,.35);
 }
-.luxa-header.is-scrolled .luxa-logo{
-    color: #F5F0E8;
-}
 
 .luxa-container{
     max-width: 1120px; /* ~ max-w-7xl */
@@ -50,7 +47,7 @@ h1, h2, h3, [id]{
 
 /* ====== Logo ====== */
 .luxa-logo{
-    color: #1A1A1A;
+    color: white;
     text-decoration: none;
     font-family: 'Playfair Display', serif;
     font-size: 2rem;           /* ~32px */
@@ -84,107 +81,6 @@ h1, h2, h3, [id]{
     color:#1A1A1A;              /* couleur par défaut lisible */
     position: relative;
     z-index: 2;                 /* passe devant tout éventuel overlay/nav */
-}
-
-.header-search{
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-    width:46px;
-    height:46px;
-    padding:0;
-    border-radius:999px;
-    border:1px solid transparent;
-    background:transparent;
-    overflow:hidden;
-    margin:0;
-    transition:width .25s ease, padding .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
-}
-
-.header-search input{
-    flex:1;
-    min-width:0;
-    border:0;
-    background:transparent;
-    font-size:0.95rem;
-    font-weight:500;
-    color:#5A4D41;
-    opacity:0;
-    padding:0;
-    margin-right:0;
-    pointer-events:none;
-    outline:none;
-    letter-spacing:.02em;
-    transition:opacity .2s ease .05s, padding .2s ease, margin .2s ease;
-}
-
-.header-search input::placeholder{
-    color:rgba(90,77,65,.6);
-}
-
-.header-search-divider{
-    width:0;
-    height:60%;
-    opacity:0;
-    background:linear-gradient(180deg, transparent, rgba(191,161,129,.7), transparent);
-    transition:width .2s ease, opacity .2s ease;
-}
-
-.header-search .icon-btn{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    border:0;
-    color:#BFA181;
-    background:transparent;
-    box-shadow:none;
-    transition:color .2s ease, transform .2s ease;
-}
-
-.header-search .icon-btn svg{
-    stroke:currentColor;
-}
-
-.header-search .icon-btn:hover{
-    color:#1A1A1A;
-    transform:scale(1.05);
-}
-
-.header-search:focus-within{
-    width:260px;
-    padding:0 12px 0 16px;
-    border:1px solid rgba(191,161,129,.7);
-    background:linear-gradient(135deg, #FFFFFF 5%, #F9F4ED 45%, #F2E6D6 100%);
-    box-shadow:0 12px 26px rgba(191,161,129,.25);
-}
-
-.header-search:focus-within input{
-    opacity:1;
-    padding-right:12px;
-    margin-right:12px;
-    pointer-events:auto;
-}
-
-.header-search:focus-within .header-search-divider{
-    width:1px;
-    opacity:1;
-}
-
-.header-search:focus-within .icon-btn{
-    color:#FDF8F0;
-    background:linear-gradient(135deg, #C9A984, #B48350);
-    box-shadow:0 6px 14px rgba(180,118,62,.35);
-}
-
-.visually-hidden{
-    position:absolute;
-    width:1px;
-    height:1px;
-    padding:0;
-    margin:-1px;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-    border:0;
 }
 
 .luxa-nav{ position: relative; z-index: 1; }
@@ -254,9 +150,6 @@ h1, h2, h3, [id]{
 /* ====== Responsive ====== */
 @media (max-width: 820px){
     .luxa-nav{ display:none; } /* cacher la nav sur mobile (simple) */
-    .luxa-actions{ gap:12px; flex-wrap:wrap; justify-content:flex-end; }
-    .header-search{ width:44px; height:42px; }
-    .header-search:focus-within{ width:100%; }
 }
 /* Bouton Connexion/Déconnexion */
 .auth-btn{
@@ -635,167 +528,73 @@ h1, h2, h3, [id]{
     font-size: .85rem;
 }
 
-.profile-submit{
-    width: auto;
-    margin-top: 24px;
-    padding: 14px 40px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #1b1b1b 0%, #000 100%);
-    border: 1px solid rgba(0,0,0,.6);
-    box-shadow: 0 18px 35px rgba(0,0,0,.25);
-    align-self: flex-end;
-}
-.profile-submit:hover{
-    transform: translateY(-2px);
-}
-
 
 /* ---------- CONTACT PAGE (LuXa) ---------- */
 /* S'appuie sur :root, .btn, .input définis dans main.css */
 
 .contact-wrap{
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 120px 24px 160px;
-    color: #fff;
-    position: relative;
-    z-index: 0;
-}
-
-.contact-wrap::before{
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 50%),
-                radial-gradient(circle at 80% 0%, rgba(191,161,129,.18), transparent 45%),
-                linear-gradient(135deg, #120f17 0%, #1c1610 35%, #070707 100%);
-    z-index: -2;
-}
-
-.contact-wrap::after{
-    content: '';
-    position: absolute;
-    inset: 10% 8%;
-    background: rgba(255,255,255,.07);
-    filter: blur(120px);
-    z-index: -1;
+    margin: 48px auto;
+    padding: 0 24px;
+    color: #1A1A1A;
 }
 
 .contact-title{
     font-family: "Playfair Display", serif;
-    font-size: clamp(2.75rem, 5vw, 4.5rem);
-    margin: 0 0 12px 0;
-    text-align: center;
-    color: #fff;
-    letter-spacing: .01em;
+    font-size: 56px;
+    margin: 0 0 8px 0;
 }
 
 .contact-lead{
-    margin: 0 auto 48px;
-    font-size: 1.15rem;
-    color: rgba(255,255,255,.75);
-    text-align: center;
-    max-width: 720px;
+    margin: 0 0 28px 0;
+    font-size: 18px;
+    color: rgba(26,26,26,.75);
 }
 
 .contact-grid{
     display: grid;
-    grid-template-columns: minmax(280px, 1fr) minmax(360px, 1.2fr);
-    gap: 36px;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 40px;
 }
 
 .contact-card{
-    border-radius: 26px;
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,.12);
-    box-shadow: 0 30px 60px rgba(0,0,0,.35);
-}
-
-.contact-card::after{
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    border: 1px solid rgba(255,255,255,.08);
-}
-
-.contact-card-info{
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.08), rgba(12,9,8,.9));
-    color: #F5F0E8;
-    backdrop-filter: blur(10px);
-}
-
-.contact-card-form{
-    background: #F5F0E8;
-    color: #1A1A1A;
-    border-color: rgba(191,161,129,.35);
-    box-shadow: 0 30px 50px rgba(15,10,6,.15);
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
 }
 
 .contact-section-title{
-    margin: 0 0 16px 0;
-    font-size: 1.4rem;
-    font-weight: 600;
-    font-family: "Playfair Display", serif;
-    letter-spacing: .02em;
+    margin: 0 0 12px 0;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
 }
 
-.contact-info{
-    margin: 22px 0;
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
+.contact-info{ margin: 18px 0; }
 .contact-info .label{
     font-weight: 600;
-    color: rgba(245,240,232,.8);
-    text-transform: uppercase;
-    font-size: .8rem;
-    letter-spacing: .2em;
+    color: rgba(26,26,26,.65);
     margin-bottom: 6px;
 }
 
-.contact-card-form .contact-info .label{
-    color: rgba(26,26,26,.6);
-}
-
-.fgroup{
-    margin: 20px 0 26px;
-}
-
+/* Réutilise tes groupes existants */
+.fgroup{ margin: 18px 0 22px; }
 .fgroup label{
     display:block;
-    margin: 0 0 10px 0;
-    color: rgba(26,26,26,.65);
-    font-weight: 500;
+    margin: 0 0 8px 0;
+    color: rgba(26,26,26,.70);
 }
 
-.contact-card-form .fgroup label{
-    color: rgba(26,26,26,.75);
-}
-
-.contact-card-form .input{
-    border: 1px solid rgba(26,26,26,.2);
-    border-radius: 18px;
-    padding: 16px 18px;
-    background: rgba(255,255,255,.9);
-    font-size: 1rem;
-}
-
-.contact-card-form .input:focus{
-    border-color: #BFA181;
-    box-shadow: 0 0 0 3px rgba(191,161,129,.25);
-}
-
+/* Input underline hérité de main.css (.input) */
+/* Petits ajustements pour textarea de contact */
 .contact-textarea{
-    min-height: 150px;
+    min-height: 140px;
     resize: vertical;
-    padding-top: 16px;
+    padding-top: 12px;
 }
 
+/* erreurs de champ + flash succès */
 .field-error{
     color: #b00020;
     font-size: 13px;
@@ -803,34 +602,18 @@ h1, h2, h3, [id]{
 }
 
 .contact-flash{
-    background: rgba(255,255,255,.12);
-    color: #F5F0E8;
-    border: 1px solid rgba(255,255,255,.25);
-    padding: 14px 18px;
-    border-radius: 16px;
-    margin-bottom: 22px;
+    background: #eaf6ec;
+    color: #135f2a;
+    border: 1px solid #bfe5c9;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 18px;
 }
 
-.contact-card-form .btn{
-    width: auto;
-    padding: 15px 46px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
-    border: 1px solid rgba(0,0,0,.4);
-    box-shadow: 0 18px 40px rgba(0,0,0,.35);
-}
-
-.contact-card-form .btn:hover{
-    transform: translateY(-2px);
-}
-
+/* Responsive */
 @media (max-width: 980px){
     .contact-grid{ grid-template-columns: 1fr; }
-    .contact-title{ font-size: 2.75rem; }
-}
-
-@media (max-width: 640px){
-    .contact-card{ padding: 24px; }
+    .contact-title{ font-size: 40px; }
 }
 
 /* ================================

@@ -63,9 +63,6 @@
                 <c:if test="${not empty selectedCategoryId}">
                     <input type="hidden" name="category" value="${selectedCategoryId}">
                 </c:if>
-                <c:if test="${not empty searchKeyword}">
-                    <input type="hidden" name="keyword" value="${fn:escapeXml(searchKeyword)}">
-                </c:if>
 
                 <!-- Filtre Prix -->
                 <div class="filter-section">
@@ -138,11 +135,6 @@
         <div class="catalogue-main">
             <div class="catalogue-header">
                 <h1 class="catalogue-title">Nos Produits</h1>
-                <c:if test="${not empty searchKeyword}">
-                    <p class="catalogue-search-summary">
-                        Résultats pour "<span>${fn:escapeXml(searchKeyword)}</span>"
-                    </p>
-                </c:if>
                 <c:if test="${not empty products}">
                     <span class="catalogue-count">${products.size()} produit${products.size() > 1 ? 's' : ''}</span>
                 </c:if>

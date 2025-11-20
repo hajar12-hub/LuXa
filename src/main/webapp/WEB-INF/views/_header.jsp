@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
-<%@ taglib uri="jakarta.tags.functions" prefix="fn" %>
 
 <%
     String ctx = request.getContextPath();
@@ -9,8 +7,6 @@
     Integer authUserId = (Integer) session.getAttribute("authUserId");
     boolean loggedIn = (authUserId != null);
 %>
-
-<c:set var="headerSearchQuery" value="${not empty param.keyword ? param.keyword : param.q}" />
 
 <link rel="stylesheet" href="<%= ctx %>/assets/css/main.css">
 
@@ -39,24 +35,13 @@
         <!-- Icônes / Actions -->
         <div class="luxa-actions">
 
-            <!-- Barre de recherche -->
-            <form class="header-search" role="search" action="<%= ctx %>/catalogue" method="get">
-                <label for="header-search-input" class="visually-hidden">Rechercher un produit</label>
-                <input
-                        type="search"
-                        id="header-search-input"
-                        name="keyword"
-                        placeholder="Rechercher un produit"
-                        value="${not empty headerSearchQuery ? fn:escapeXml(headerSearchQuery) : ''}"
-                        autocomplete="off">
-                <span class="header-search-divider" aria-hidden="true"></span>
-                <button class="icon-btn" aria-label="Rechercher" type="submit">
-                    <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" class="icon">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </button>
-            </form>
+            <!-- Icône Recherche -->
+            <button class="icon-btn" aria-label="Rechercher" type="button">
+                <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" class="icon">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </button>
 
             <!-- Icône Profil -->
             <a href="<%= ctx %>/<%= loggedIn ? "profil" : "login" %>"

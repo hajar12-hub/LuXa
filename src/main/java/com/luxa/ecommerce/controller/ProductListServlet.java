@@ -30,18 +30,8 @@ public class ProductListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.setCharacterEncoding("UTF-8");
             String categoryIdStr = req.getParameter("category");
             String keyword = req.getParameter("q");
-            if (keyword == null || keyword.trim().isEmpty()) {
-                keyword = req.getParameter("keyword");
-            }
-            if (keyword != null) {
-                keyword = keyword.trim();
-                if (keyword.isEmpty()) {
-                    keyword = null;
-                }
-            }
             String minPriceStr = req.getParameter("minPrice");
             String maxPriceStr = req.getParameter("maxPrice");
 
@@ -72,18 +62,7 @@ public class ProductListServlet extends HttpServlet {
                 }
             }
 
-            List<Product> products = productDao.search(categoryId, null, minPrice, maxPrice);
-
-            if (keyword != null) {
-                String keywordLower = keyword.toLowerCase();
-                products = products.stream()
-                        .filter(p -> {
-                            String name = p.getName() != null ? p.getName().toLowerCase() : "";
-                            String description = p.getDescription() != null ? p.getDescription().toLowerCase() : "";
-                            return name.contains(keywordLower) || description.contains(keywordLower);
-                        })
-                        .collect(Collectors.toList());
-            }
+            List<Product> products = productDao.search(categoryId, keyword, minPrice, maxPrice);
 
             List<ProductListDto> productDtos = products.stream()
                     .map(this::convertToDto)

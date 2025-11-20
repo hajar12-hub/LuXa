@@ -15,7 +15,7 @@
 
     <div class="contact-grid">
         <!-- Colonne Informations -->
-        <section class="contact-card contact-card-info">
+        <section class="contact-card">
             <h3 class="contact-section-title">Informations</h3>
 
             <div class="contact-info">
@@ -40,7 +40,7 @@
         </section>
 
         <!-- Colonne Formulaire -->
-        <section class="contact-card contact-card-form">
+        <section class="contact-card">
             <h3 class="contact-section-title">Envoyez-nous un Message</h3>
 
             <form method="post" action="<%= ctx %>/contact" novalidate>

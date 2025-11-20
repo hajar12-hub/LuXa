@@ -30,10 +30,6 @@ public class CatalogueServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.setCharacterEncoding("UTF-8");
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("text/html;charset=UTF-8");
-
             List<Category> allCategories = categoryDao.findAll();
 
             // Récupération des paramètres de filtrage
@@ -47,18 +43,6 @@ public class CatalogueServlet extends HttpServlet {
                 }
             }
 
-            // Mot-clé de recherche
-            String keyword = Optional.ofNullable(req.getParameter("keyword"))
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .orElse(null);
-            if (keyword == null) {
-                keyword = Optional.ofNullable(req.getParameter("q"))
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .orElse(null);
-            }
-
             // Filtres prix
             Double priceMin = parseDouble(req.getParameter("priceMin"));
             Double priceMax = parseDouble(req.getParameter("priceMax"));
@@ -67,7 +51,7 @@ public class CatalogueServlet extends HttpServlet {
             String[] materialsParams = req.getParameterValues("materials");
             List<String> selectedMaterials = materialsParams != null ? Arrays.asList(materialsParams) : new ArrayList<>();
 
-            // Récupération initiale des produits (sans filtre mot-clé pour éviter erreurs DB)
+            // Récupération des produits avec filtres
             List<Product> allProducts = productDao.search(categoryId, null, priceMin, priceMax);
 
             // Debug: Vérifier le chargement des images
@@ -82,20 +66,8 @@ public class CatalogueServlet extends HttpServlet {
             // Application du filtre matériaux (filtrage en mémoire car le DAO ne le gère pas)
             List<Product> filteredProducts = allProducts;
             if (!selectedMaterials.isEmpty()) {
-                filteredProducts = filteredProducts.stream()
+                filteredProducts = allProducts.stream()
                         .filter(p -> p.getMaterial() != null && selectedMaterials.contains(p.getMaterial()))
-                        .collect(Collectors.toList());
-            }
-
-            // Filtre mot-clé côté application (nom + description)
-            if (keyword != null) {
-                String keywordLower = keyword.toLowerCase();
-                filteredProducts = filteredProducts.stream()
-                        .filter(p -> {
-                            String name = p.getName() != null ? p.getName().toLowerCase() : "";
-                            String description = p.getDescription() != null ? p.getDescription().toLowerCase() : "";
-                            return name.contains(keywordLower) || description.contains(keywordLower);
-                        })
                         .collect(Collectors.toList());
             }
 
@@ -115,7 +87,6 @@ public class CatalogueServlet extends HttpServlet {
             req.setAttribute("selectedPriceMax", priceMax);
             req.setAttribute("selectedMaterials", selectedMaterials);
             req.setAttribute("availableMaterials", availableMaterials);
-            req.setAttribute("searchKeyword", keyword);
 
             req.getRequestDispatcher("/WEB-INF/views/catalogue.jsp").forward(req, resp);
 

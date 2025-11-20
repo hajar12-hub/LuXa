@@ -205,17 +205,6 @@
     margin-bottom: 24px;
 }
 
-.catalogue-search-summary{
-    margin:0 0 12px 0;
-    font-size:0.95rem;
-    color:rgba(26,26,26,.7);
-}
-
-.catalogue-search-summary span{
-    font-weight:600;
-    color:#1A1A1A;
-}
-
 .catalogue-title {
     font-size: 1.75rem;
     font-weight: 600;
