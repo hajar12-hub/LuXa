@@ -50,16 +50,26 @@ public class ProductDAOImpl implements ProductDAO {
                     managedProduct.setMaterial(product.getMaterial());
                     managedProduct.setSizeOrLength(product.getSizeOrLength());
                     
-                    // Gérer la catégorie : si elle existe, la recharger dans la session
+                    // Gérer la catégorie : recharger depuis la base si nécessaire
                     if (product.getCategory() != null && product.getCategory().getId() != null) {
                         com.luxa.ecommerce.model.Category category = em.find(com.luxa.ecommerce.model.Category.class, product.getCategory().getId());
-                        managedProduct.setCategory(category);
+                        if (category != null) {
+                            managedProduct.setCategory(category);
+                        } else {
+                            // La catégorie n'existe plus, la retirer
+                            managedProduct.setCategory(null);
+                        }
                     } else {
+                        // Pas de catégorie spécifiée, la retirer
                         managedProduct.setCategory(null);
                     }
                     
                     // Les images et variants sont gérés séparément, on ne les modifie pas ici
-                    // Pas besoin de merge car managedProduct est déjà géré
+                    // Les modifications sont automatiquement synchronisées avec la base de données au commit
+                    
+                    // Forcer le flush pour s'assurer que les modifications sont bien synchronisées
+                    em.flush();
+                    System.out.println("DEBUG ProductDAOImpl.update: Flush effectué pour le produit ID: " + product.getId());
                 } else {
                     // Si le produit n'existe pas, on le crée
                     em.persist(product);
@@ -70,7 +80,7 @@ public class ProductDAOImpl implements ProductDAO {
             }
             
             tx.commit();
-            System.out.println("DEBUG ProductDAOImpl.update: Produit mis à jour avec succès - ID: " + product.getId());
+            System.out.println("DEBUG ProductDAOImpl.update: Transaction commitée avec succès pour le produit ID: " + product.getId());
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
             System.err.println("ERREUR ProductDAOImpl.update: " + e.getMessage());
@@ -125,28 +135,36 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> findAll() {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            // Utiliser une requête simple pour éviter les problèmes avec MultipleBagFetchException
-            // On charge d'abord les produits avec leurs catégories
+            // Charger les produits avec leurs catégories et leurs images
+            // Note: category est @ManyToOne (pas une collection), donc pas de MultipleBagFetchException
             String jpql = "SELECT DISTINCT p FROM Product p " +
-                    "LEFT JOIN FETCH p.category";
+                    "LEFT JOIN FETCH p.category " +
+                    "LEFT JOIN FETCH p.images";
             TypedQuery<Product> query = em.createQuery(jpql, Product.class);
             List<Product> products = query.getResultList();
-            
-            // Charger les images séparément pour chaque produit si nécessaire
-            // (Les images seront chargées en lazy loading si nécessaire)
             return products;
         } catch (Exception e) {
             System.err.println("ERREUR ProductDAOImpl.findAll(): " + e.getMessage());
             e.printStackTrace();
-            // En cas d'erreur, essayer une requête encore plus simple
+            // En cas d'erreur (ex: MultipleBagFetchException), essayer sans les images
             try {
-                String simpleJpql = "SELECT p FROM Product p";
-                TypedQuery<Product> simpleQuery = em.createQuery(simpleJpql, Product.class);
-                return simpleQuery.getResultList();
+                String jpqlWithoutImages = "SELECT DISTINCT p FROM Product p " +
+                        "LEFT JOIN FETCH p.category";
+                TypedQuery<Product> queryWithoutImages = em.createQuery(jpqlWithoutImages, Product.class);
+                return queryWithoutImages.getResultList();
             } catch (Exception e2) {
-                System.err.println("ERREUR ProductDAOImpl.findAll() (requête simple): " + e2.getMessage());
+                System.err.println("ERREUR ProductDAOImpl.findAll() (sans images): " + e2.getMessage());
                 e2.printStackTrace();
-                return new java.util.ArrayList<>();
+                // En dernier recours, requête simple
+                try {
+                    String simpleJpql = "SELECT p FROM Product p";
+                    TypedQuery<Product> simpleQuery = em.createQuery(simpleJpql, Product.class);
+                    return simpleQuery.getResultList();
+                } catch (Exception e3) {
+                    System.err.println("ERREUR ProductDAOImpl.findAll() (requête simple): " + e3.getMessage());
+                    e3.printStackTrace();
+                    return new java.util.ArrayList<>();
+                }
             }
         } finally {
             em.close();

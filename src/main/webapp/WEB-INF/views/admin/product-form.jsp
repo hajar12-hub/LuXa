@@ -24,7 +24,9 @@
         <div class="admin-header">
             <h1 class="admin-title"><%= pageTitle %></h1>
             <p class="admin-subtitle">
-                <%= isEdit ? "Modifiez les informations du produit." : "Remplissez les informations pour ajouter un nouveau produit." %>
+                ${empty product 
+                    ? "Remplissez les informations pour ajouter un nouveau produit." 
+                    : "Modifiez les informations du produit."}
             </p>
         </div>
 
@@ -41,7 +43,7 @@
 
         <div class="admin-card">
             <form action="<%= formAction %>" method="post" style="display: grid; gap: 24px;">
-                <c:if test="${isEdit && product != null}">
+                <c:if test="${not empty product}">
                     <input type="hidden" name="id" value="${product.id}"/>
                 </c:if>
 

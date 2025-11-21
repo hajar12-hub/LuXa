@@ -106,44 +106,65 @@ public class AdminEditProductServlet extends HttpServlet {
                     
                     System.out.println("DEBUG AdminEditProductServlet: Produit trouvé - ID: " + product.getId() + ", Nom actuel: " + product.getName());
                     
-                    // Mettre à jour les champs
-                    product.setName(name != null ? name : product.getName());
-                    product.setDescription(description != null ? description : product.getDescription());
+                    // Mettre à jour les champs - toujours mettre à jour même si null pour permettre de vider les champs
+                    if (name != null) {
+                        product.setName(name);
+                        System.out.println("DEBUG AdminEditProductServlet: Nom mis à jour: " + name);
+                    }
+                    if (description != null) {
+                        product.setDescription(description);
+                        System.out.println("DEBUG AdminEditProductServlet: Description mise à jour");
+                    }
                     
                     if (priceStr != null && !priceStr.isEmpty()) {
                         try {
-                            product.setPrice(new BigDecimal(priceStr));
-                            System.out.println("DEBUG AdminEditProductServlet: Prix mis à jour: " + priceStr);
+                            BigDecimal newPrice = new BigDecimal(priceStr);
+                            product.setPrice(newPrice);
+                            System.out.println("DEBUG AdminEditProductServlet: Prix mis à jour: " + newPrice);
                         } catch (NumberFormatException e) {
                             System.err.println("Erreur format prix: " + priceStr);
+                            throw new IllegalArgumentException("Format de prix invalide: " + priceStr, e);
                         }
                     }
                     
                     if (stockQuantityStr != null && !stockQuantityStr.isEmpty()) {
                         try {
-                            product.setStockQuantity(Integer.parseInt(stockQuantityStr));
-                            System.out.println("DEBUG AdminEditProductServlet: Stock mis à jour: " + stockQuantityStr);
+                            Integer newStock = Integer.parseInt(stockQuantityStr);
+                            product.setStockQuantity(newStock);
+                            System.out.println("DEBUG AdminEditProductServlet: Stock mis à jour: " + newStock);
                         } catch (NumberFormatException e) {
                             System.err.println("Erreur format stock: " + stockQuantityStr);
+                            throw new IllegalArgumentException("Format de stock invalide: " + stockQuantityStr, e);
                         }
                     }
                     
                     // Gérer la catégorie : si vide, retirer la catégorie, sinon la définir
                     if (categoryIdStr != null && !categoryIdStr.isEmpty()) {
                         try {
-                            Optional<Category> categoryOpt = categoryDAO.findById(Integer.parseInt(categoryIdStr));
+                            Integer categoryId = Integer.parseInt(categoryIdStr);
+                            Optional<Category> categoryOpt = categoryDAO.findById(categoryId);
                             if (categoryOpt.isPresent()) {
                                 product.setCategory(categoryOpt.get());
-                                System.out.println("DEBUG AdminEditProductServlet: Catégorie mise à jour: " + categoryOpt.get().getName());
+                                System.out.println("DEBUG AdminEditProductServlet: Catégorie mise à jour: " + categoryOpt.get().getName() + " (ID: " + categoryId + ")");
+                            } else {
+                                System.err.println("WARN AdminEditProductServlet: Catégorie introuvable avec ID: " + categoryId);
+                                product.setCategory(null);
                             }
                         } catch (NumberFormatException e) {
                             System.err.println("Erreur format categoryId: " + categoryIdStr);
+                            throw new IllegalArgumentException("Format de categoryId invalide: " + categoryIdStr, e);
                         }
                     } else {
                         // Si categoryIdStr est vide, retirer la catégorie
                         product.setCategory(null);
                         System.out.println("DEBUG AdminEditProductServlet: Catégorie retirée");
                     }
+                    
+                    // Afficher l'état du produit avant la sauvegarde
+                    System.out.println("DEBUG AdminEditProductServlet: Avant update - Nom: " + product.getName() + 
+                                     ", Prix: " + product.getPrice() + 
+                                     ", Stock: " + product.getStockQuantity() + 
+                                     ", Catégorie: " + (product.getCategory() != null ? product.getCategory().getName() : "null"));
                     
                     // Sauvegarder les modifications
                     productDAO.update(product);
@@ -157,6 +178,7 @@ public class AdminEditProductServlet extends HttpServlet {
         } catch (Exception e) {
             System.err.println("ERREUR AdminEditProductServlet POST: " + e.getMessage());
             e.printStackTrace();
+            req.getSession().setAttribute("error", "Erreur lors de la mise à jour du produit: " + e.getMessage());
         }
 
         resp.sendRedirect(req.getContextPath() + "/admin/products");

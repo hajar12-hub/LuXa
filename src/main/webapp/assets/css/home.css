@@ -15,15 +15,13 @@
 
 /* ====== HERO BANNER ====== */
 .hero-banner {
-    background: #F5F0E8;
-    padding: 80px 24px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    height: 100vh;           /* prend tout l'espace de l'écran */
+    padding: 0;
     text-align: center;
     position: relative;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,11 +34,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: inherit;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.3;
+    background: rgba(0,0,0,0.25);  /* overlay optionnel (25% sombre) */
     z-index: 0;
 }
 
@@ -100,6 +94,125 @@
 .btn-hero-outline:hover {
     background: #1A1A1A;
     color: #F5F0E8;
+}
+
+/* ========================================= */
+/* SECTION FLASH SALE / VENTE FLASH */
+/* ========================================= */
+
+.flash-sale-section {
+    padding: 80px 24px;
+    background: #FAF8F5;
+}
+
+.flash-sale-section .section-header-center {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.flash-sale-section .section-title-center {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+}
+
+.flash-sale-section .section-subtitle-center {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Compte à rebours */
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 50px 0;
+    flex-wrap: wrap;
+}
+
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    min-width: 100px;
+    transition: transform 0.3s ease;
+}
+
+.time-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.time-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+}
+
+.time-label {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.time-separator {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 5px;
+}
+
+/* Badge de réduction */
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #C9A961;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+/* Conteneur des prix */
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.old-price {
+    font-size: 0.95rem;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+.new-price {
+    font-size: 1.3rem;
+    color: #C9A961;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
 }
 
 /* ====== SECTION CATÉGORIES ====== */
@@ -274,6 +387,11 @@
     height: 100%;
     object-fit: contain;
     padding: 16px;
+    transition: transform 0.4s ease;
+}
+
+.product-card-home:hover .product-image-home {
+    transform: scale(1.08);
 }
 
 .product-card-body-home {
@@ -356,13 +474,43 @@
         font-size: 2rem;
     }
 
-    .categories-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+    .flash-sale-section {
+        padding: 50px 16px;
+    }
+
+    .flash-sale-section .section-title-center {
+        font-size: 2rem;
+    }
+
+    .countdown-container {
+        gap: 10px;
+        margin: 30px 0;
+    }
+
+    .time-block {
+        padding: 15px 20px;
+        min-width: 70px;
+    }
+
+    .time-number {
+        font-size: 2rem;
+    }
+
+    .time-label {
+        font-size: 0.75rem;
+    }
+
+    .time-separator {
+        font-size: 1.5rem;
     }
 
     .products-grid-home {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 24px;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
         gap: 24px;
     }
 
@@ -386,6 +534,25 @@
     }
 }
 
+@media (max-width: 576px) {
+    .countdown-container {
+        gap: 8px;
+    }
+
+    .time-block {
+        padding: 12px 15px;
+        min-width: 60px;
+    }
+
+    .time-number {
+        font-size: 1.5rem;
+    }
+
+    .products-grid-home {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;
@@ -400,8 +567,239 @@
         width: 100%;
         text-align: center;
     }
+}
+/* ========================================= */
+/* SECTION AVIS CLIENTS / TESTIMONIALS */
+/* ========================================= */
 
-    .products-grid-home {
+.testimonials-section {
+    padding: 80px 24px;
+    background: #F5F0E8;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 40px 35px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.quote-icon {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 120px;
+    font-family: Georgia, serif;
+    color: #f0f0f0;
+    line-height: 1;
+    font-weight: 700;
+    z-index: 0;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.star {
+    color: #BFA181;
+    font-size: 1.2rem;
+}
+
+.testimonial-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+    min-height: 120px;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.author-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #BFA181;
+}
+
+.author-info {
+    flex: 1;
+}
+
+.author-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin: 0 0 5px 0;
+}
+
+.author-title {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* ========================================= */
+/* SECTION CADEAU / GIFT SECTION */
+/* ========================================= */
+
+.gift-section {
+    position: relative;
+    padding: 120px 24px;
+    background-image: url('${pageContext.request.contextPath}/images/montre-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #1A1A1A;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Fallback si pas d'image de fond */
+.gift-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #1A1A1A 0%, #2d2d2d 100%);
+    z-index: 0;
+}
+
+.gift-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.gift-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.gift-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+.gift-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 40px 0;
+    line-height: 1.6;
+}
+
+.btn-gift {
+    display: inline-block;
+    padding: 16px 40px;
+    background: #BFA181;
+    color: #1A1A1A;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-gift:hover {
+    background: #d4b899;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(191, 161, 129, 0.3);
+}
+
+/* ========================================= */
+/* RESPONSIVE */
+/* ========================================= */
+
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 60px 16px;
+    }
+
+    .testimonials-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .testimonial-card {
+        padding: 30px 25px;
+    }
+
+    .quote-icon {
+        font-size: 80px;
+        top: 15px;
+        right: 20px;
+    }
+
+    .testimonial-text {
+        min-height: auto;
+    }
+
+    .gift-section {
+        padding: 80px 16px;
+    }
+
+    .gift-title {
+        font-size: 2rem;
+    }
+
+    .gift-subtitle {
+        font-size: 1rem;
+    }
+
+    .btn-gift {
+        padding: 14px 30px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .gift-title {
+        font-size: 1.8rem;
+    }
+
+    .btn-gift {
+        width: 100%;
+        padding: 16px 20px;
     }
 }
